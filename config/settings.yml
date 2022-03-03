@@ -15,3 +15,6 @@ features:
   stripe_enabled: <%= !!ActiveModel::Type::Boolean.new.cast(ENV['STRIPE_ENABLED']) %>
 docker_hub:
   public_namespace: 'library'
+sidekiq:
+  login:  <%= ENV['SIDEKIQ_LOGIN'] || '' %>
+  password:  <%= ENV['SIDEKIQ_PASSWORD'] || '' %>
