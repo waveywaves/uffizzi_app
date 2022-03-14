@@ -61,6 +61,13 @@ services:
 
     command: bundle exec puma -C config/puma.rb
 
+  core:
+    build: core
+    environment: *web-environment
+    volumes: *web-volumes
+    depends_on:
+      - db
+
   db:
     image: postgres:11.4
     ports:
@@ -79,7 +86,6 @@ services:
 
   redis:
     image: redis
-
 
   bundle_cache:
     image: busybox

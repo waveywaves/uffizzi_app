@@ -21,7 +21,7 @@ RUN apt-get update \
   && apt-get autoremove -y \
   && rm -rf /var/lib/apt/lists/*
 
-RUN gem install bundler:2.1.4
+RUN gem install bundler:2.3.8
 
 COPY Gemfile Gemfile.lock $RAILS_ROOT/
 RUN bundle install --jobs 5
@@ -32,4 +32,4 @@ ENV PATH=$RAILS_ROOT/bin:${PATH}
 
 EXPOSE 7000
 
-CMD /bin/bash -c "bundle exec rails db:create db:migrate && bundle exec puma -C config/puma.rb"
+CMD /bin/bash -c "bundle exec rails db:setup && bundle exec puma -C config/puma.rb"

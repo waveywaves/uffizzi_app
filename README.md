@@ -33,4 +33,99 @@ To host Uffizzi yourself, you will also need the following external dependencies
 
 ## Controller Design  
 
-This `uffizzi_app` acts as a REST API for [`uffizzi_cli`](https://github.com/UffizziCloud/uffizzi_app) and [`Uffizzi Dashboard`](https://app.uffizzi.com) interfaces. It requires [`uffizzi_controller`](https://github.com/UffizziCloud/uffizzi_controller) as a supporting service.  
+This `uffizzi_app` acts as a REST API for [`uffizzi_cli`](https://github.com/UffizziCloud/uffizzi_app) and [`Uffizzi Dashboard`](https://app.uffizzi.com) interfaces. It requires [`uffizzi_controller`](https://github.com/UffizziCloud/uffizzi_controller) as a supporting service.
+
+## Uffizzi App Environment Variables
+
+- `RAILS_SECRET_KEY_BASE` - secret_key_base of Rails::Application
+- `DATABASE_HOST` - the database hostname (default: 127.0.0.1)
+- `DATABASE_USER` - the database username (default: postgres)
+- `DATABASE_PASSWORD` - the database password
+- `DATABASE_PORT` - the database port (default: 5432)
+- `BUNDLE_PATH` - the location of gems for `bundle install` command (not required)
+- `GEM_PATH` - the location where gems can be found (not required)
+- `GEM_HOME` - where gems will be installed (not required)
+- `RAILS_WORKERS_COUNT` - the number of `puma` workers (default: 18)
+- `RAILS_THREADS_COUNT` - the number of `puma` threads (default: 5)
+- `RAILS_PORT` - the `puma` port (default: 7000)
+- `RAILS_ENV` - the rails environment (default: development)
+- `SIDEKIQ_CONCURRENCY` - sidekiq concurrency (default: 5)
+- `ALLOWED_HOSTS` - allowed hosts for rails app used for Rack::Cors
+
+## Prepare
+
+```bash
+docker-compose run --rm web bundle install && rails db:setup
+docker-compose up
+```
+
+## Connect from uffizzi-cli to the app
+
+```bash
+docker-compose run --rm gem bash
+bundle exec uffizzi login --hostname http://web:7000 -u admin@uffizzi.com
+```
+
+password - `password`
+
+## API Documentation
+
+* [Development](http://lvh.me:7000/api-docs/index.html)
+
+Rebuild documentation locally:
+
+```bash
+docker-compose run --rm core bash
+bundle exec rake core:generate_docs
+```
+
+## Git workflow for the app:
+
+1. Clone the repository and checkout to `develop` branch
+
+2. Pull repository to ensure you have the latest changes
+   
+```bash
+git pull --rebase develop
+```
+
+1. Start new branch from `develop`
+   
+```bash
+git checkout -b feature/short_issue_description (e.g. feature/add_domain_settings)
+```
+
+1. Make changes you need for the feature, commit them to the repo
+   
+```bash
+git add .
+git commit -m 'short commit description' (e.g. git commit -m 'added domain settings')
+git push origin BRANCH_NAME
+```
+
+1. You already can create PR with develop branch as a target. Once the feature is ready let us know in the channel - we will review
+
+2. Merge your feature to `qa` branch and push. Ensure your pipeline is successful
+   
+```bash
+git checkout qa
+git pull --rebase qa
+git merge --no-ff BRANCH_NAME
+git push origin qa
+```
+
+# Running linter
+
+```bash
+docker-compose run --rm web bundle exec rubocop -A
+```
+
+# Running test
+
+```bash
+docker-compose run --rm core bash
+bin/rails test
+```
+
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/UffizziCloud/uffizzi_app.

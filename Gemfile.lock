@@ -1,7 +1,5 @@
-GIT
-  remote: https://github.com/UffizziCloud/uffizzi_core.git
-  revision: 72422f5e50aeaaf40bbccb5d7df1adefe02379f6
-  branch: qa
+PATH
+  remote: core
   specs:
     uffizzi_core (0.1.0)
       aasm
@@ -10,6 +8,9 @@ GIT
       activerecord (~> 6.1.0)
       activesupport (~> 6.1.0)
       ancestry
+      aws-sdk-ecr (~> 1.47)
+      aws-sdk-eventbridge (~> 1.30)
+      aws-sdk-iam (~> 1.61)
       dotenv
       enumerize
       faraday
@@ -26,6 +27,7 @@ GIT
       rswag-api
       rswag-ui
       sidekiq
+      swagger_yard
       virtus
 
 GEM
@@ -101,6 +103,25 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ancestry (4.1.0)
       activerecord (>= 5.2.6)
+    ast (2.4.2)
+    aws-eventstream (1.2.0)
+    aws-partitions (1.566.0)
+    aws-sdk-core (3.130.0)
+      aws-eventstream (~> 1, >= 1.0.2)
+      aws-partitions (~> 1, >= 1.525.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-ecr (1.55.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-eventbridge (1.37.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-iam (1.68.0)
+      aws-sdk-core (~> 3, >= 3.127.0)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.4.0)
+      aws-eventstream (~> 1, >= 1.0.2)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
       ice_nine (~> 0.11.0)
@@ -247,6 +268,7 @@ GEM
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
+    jmespath (1.6.1)
     jsonapi-renderer (0.2.2)
     jwt (2.3.0)
     listen (3.7.1)
@@ -274,6 +296,10 @@ GEM
       faraday (>= 0.9)
       sawyer (~> 0.8.0, >= 0.5.3)
     os (1.1.4)
+    parallel (1.21.0)
+    parser (3.1.1.0)
+      ast (~> 2.4.1)
+    parslet (2.0.0)
     pg (1.3.3)
     public_suffix (4.0.6)
     puma (4.3.11)
@@ -310,11 +336,13 @@ GEM
       method_source
       rake (>= 0.13)
       thor (~> 1.0)
+    rainbow (3.1.1)
     rake (13.0.6)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     redis (4.6.0)
+    regexp_parser (2.2.1)
     representable (3.1.1)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
@@ -330,6 +358,22 @@ GEM
     rswag-ui (2.5.1)
       actionpack (>= 3.1, < 7.1)
       railties (>= 3.1, < 7.1)
+    rubocop (1.26.0)
+      parallel (~> 1.10)
+      parser (>= 3.1.0.0)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml
+      rubocop-ast (>= 1.16.0, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 3.0)
+    rubocop-ast (1.16.0)
+      parser (>= 3.1.1.0)
+    rubocop-minitest (0.18.0)
+      rubocop (>= 0.90, < 2.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
+    ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
@@ -350,12 +394,16 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    swagger_yard (1.1.1)
+      parslet
+      yard
     thor (1.2.1)
     thread_safe (0.3.6)
     trailblazer-option (0.1.2)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     uber (0.1.0)
+    unicode-display_width (2.1.0)
     virtus (2.0.0)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -364,6 +412,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    yard (0.9.27)
+      webrick (~> 1.7.0)
     zeitwerk (2.5.4)
     zonefile (1.06)
 
@@ -381,6 +431,9 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.1.0)
   sidekiq
+  rubocop
+  rubocop-minitest
+  rubocop-rake
   tzinfo-data
   uffizzi_core!
 
