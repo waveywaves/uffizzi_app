@@ -238,6 +238,55 @@
         "x-action": "destroy"
       }
     },
+    "/api/cli/v1/projects/{project_slug}/deployments/{deployment_id}/contaiers": {
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container-index",
+        "parameters": [
+          {
+            "name": "deployment_d",
+            "description": "The id of the deployment",
+            "required": true,
+            "in": "path",
+            "type": "integer"
+          },
+          {
+            "name": "deployment_id",
+            "description": "Scope response to deployment_id",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "project_slug",
+            "description": "The project_slug for the project",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Container"
+            }
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        },
+        "description": "Get a list of container services for a deployment",
+        "summary": "Get a list of container services for a deployment",
+        "x-controller": "uffizzi_core/api/cli/v1/projects/deployments/containers",
+        "x-action": "index"
+      }
+    },
     "/api/cli/v1/projects/{project_slug}/deployments": {
       "get": {
         "tags": [
@@ -660,6 +709,10 @@
       "description": ""
     },
     {
+      "name": "Container",
+      "description": ""
+    },
+    {
       "name": "Deployment",
       "description": ""
     },
@@ -773,6 +826,35 @@
         },
         "source": {
           "type": "string"
+        }
+      }
+    },
+    "UffizziCore_Container": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "memory_limit": {
+          "type": "integer"
+        },
+        "memory_request": {
+          "type": "integer"
+        },
+        "continuously_deploy": {
+          "type": "string"
+        },
+        "variables": {
+          "type": "object"
+        },
+        "secret_variables": {
+          "type": "object"
+        },
+        "container_config_files": {
+          "$ref": "#/definitions/ConfigFile"
         }
       }
     },
