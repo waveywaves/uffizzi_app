@@ -33,7 +33,7 @@ class UffizziCore::Api::Cli::V1::Projects::Deployments::EventsControllerTest < A
     )
 
     stubbed_controller_get_deployment_events = stub_controller_get_deployment_events(@deployment).to_return(status: 200,
-                                                                                                            body: events.to_json)
+                                                                                                            body: events.to_json, headers: { 'Content-Type' => 'application/json' })
 
     params = {
       project_slug: @project.slug,
@@ -69,7 +69,7 @@ class UffizziCore::Api::Cli::V1::Projects::Deployments::EventsControllerTest < A
     )
 
     stubbed_controller_get_deployment_events = stub_controller_get_deployment_events(@deployment).to_return(status: 200,
-                                                                                                            body: events.to_json)
+                                                                                                            body: events.to_json, headers: { 'Content-Type' => 'application/json' })
 
     params = {
       project_slug: @project.slug,
