@@ -68,6 +68,6 @@ module UffizziCore::ControllerStubSupport
   def stub_container_log_request(deployment_id, pod_name, limit, data)
     url = "#{Settings.controller.url}/deployments/#{deployment_id}/containers/#{pod_name}/logs?limit=#{limit}"
 
-    stubbed_request = stub_request(:get, url).to_return(status: 200, body: data.to_json)
+    stub_request(:get, url).to_return(status: 200, body: data.to_json)
   end
 end
