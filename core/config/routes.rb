@@ -34,6 +34,7 @@ UffizziCore::Engine.routes.draw do
                   end
                 end
                 resources :events, only: ['index']
+                resources :containers, only: ['index']
               end
             end
             resources :secrets, only: ['index', 'destroy'] do

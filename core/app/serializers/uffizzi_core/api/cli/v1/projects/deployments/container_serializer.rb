@@ -19,4 +19,10 @@ class UffizziCore::Api::Cli::V1::Projects::Deployments::ContainerSerializer < Uf
 
     container_name
   end
+
+  def secret_variables
+    return unless object.secret_variables.present?
+
+    object.secret_variables.map { |var| anonymize(var) }
+  end
 end
