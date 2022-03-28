@@ -60,7 +60,7 @@ This `uffizzi_app` acts as a REST API for [`uffizzi_cli`](https://github.com/Uff
 ## Prepare
 
 ```bash
-docker-compose run --rm web bundle install && rails db:setup
+docker-compose run --rm web bash -c "bundle install && bundle exec rails db:setup"
 docker-compose up
 ```
 
@@ -131,6 +131,11 @@ docker-compose run --rm web bundle exec rubocop -A
 docker-compose run --rm core bash
 bin/rails test
 ```
+
+# Health checks
+
+The default health check uri is `health_check`. To use a custom uri please add the `HEALTH_CHECK_URI` environment
+variable to the docker-compose.yml
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/UffizziCloud/uffizzi_app.
