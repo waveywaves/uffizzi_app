@@ -162,6 +162,8 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
       build_docker_repo_attributes(image_data, credentials, :google, UffizziCore::Repo::Google.name)
     when UffizziCore::Repo::GithubContainerRegistry.name
       build_docker_repo_attributes(image_data, credentials, :github_container_registry, UffizziCore::Repo::GithubContainerRegistry.name)
+    when UffizziCore::Repo::Amazon.name
+      build_docker_repo_attributes(image_data, credentials, :amazon, UffizziCore::Repo::Amazon.name)
     else
       raise UffizziCore::ComposeFile::BuildError, I18n.t('compose.invalid_repo_type')
     end
@@ -178,6 +180,8 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
       UffizziCore::Repo::Google.name
     elsif UffizziCore::ComposeFile::ContainerService.github_container_registry?(container_data)
       UffizziCore::Repo::GithubContainerRegistry.name
+    elsif UffizziCore::ComposeFile::ContainerService.amazon?(container_data)
+      UffizziCore::Repo::Amazon.name
     end
   end
 
@@ -196,7 +200,7 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
 
   def build_docker_repo_attributes(image_data, credentials, scope, repo_type)
     credential = credentials.send(scope).first
-    raise UffizziCore::ComposeFile::BuildError, 'Invalid credential: Docker' if credential.nil?
+    raise UffizziCore::ComposeFile::BuildError, I18n.t('compose.invalid_credential', value: scope) if credential.nil?
 
     docker_builder(repo_type).build_attributes(image_data)
   end
