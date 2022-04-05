@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uffizzi_core (0.1.0)
+    uffizzi-core (0.1.0)
       aasm
       actionpack (~> 6.1.0)
       active_model_serializers
@@ -382,7 +382,7 @@ DEPENDENCIES
   puma
   rack-cors
   rake
-  uffizzi_core!
+  uffizzi-core!
   webmock
 
 BUNDLED WITH
