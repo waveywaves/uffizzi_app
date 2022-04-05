@@ -3,7 +3,7 @@
 require_relative 'lib/uffizzi_core/version'
 # rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
-  spec.name        = 'uffizzi_core'
+  spec.name        = 'uffizzi-core'
   spec.version     = UffizziCore::VERSION
   spec.authors     = ['Josh Thurman', 'Grayson Adkins']
   spec.email       = ['info@uffizzi.com']
@@ -15,8 +15,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.5.0'
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = 'https://github.com/UffizziCloud/uffizzi_core'
-  spec.metadata['changelog_uri'] = 'https://github.com/UffizziCloud/uffizzi_core/blob/master/CHANGELOG.md'
+  spec.metadata['source_code_uri'] = 'https://github.com/UffizziCloud/uffizzi_app/tree/main/core'
+  spec.metadata['changelog_uri'] = 'https://github.com/UffizziCloud/uffizzi_app/blob/main/core/CHANGELOG.md'
 
   spec.files = Dir['{app,config,db,lib,swagger}/**/*', 'LICENSE', 'Rakefile', 'README.md']
 
