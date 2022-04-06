@@ -23,7 +23,7 @@ class UffizziCore::GithubContainerRegistryClient
     token.present?
   end
 
-  def manifests(tag:, image:)
+  def manifests(image:, tag:)
     url = "/v2/#{@username}/#{image}/manifests/#{tag}"
     response = token_connection.get(url)
 
