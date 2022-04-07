@@ -28,4 +28,5 @@ require 'virtus'
 
 module UffizziCore
   mattr_accessor :table_names, default: {}
+  mattr_accessor :dependencies, default: {}
 end
