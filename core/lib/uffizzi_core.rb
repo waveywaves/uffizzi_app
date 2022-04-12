@@ -30,7 +30,7 @@ module UffizziCore
   mattr_accessor :dependencies, default: {
     rbac: 'UffizziCore::Rbac::UserAccessService',
   }
-  mattr_accessor table_names:, default: {
+  mattr_accessor :table_names, default: {
     accounts: :uffizzi_core_accounts,
     activity_items: :uffizzi_core_activity_items,
     builds: :uffizzi_core_builds,
