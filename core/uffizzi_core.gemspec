@@ -3,13 +3,13 @@
 require_relative 'lib/uffizzi_core/version'
 # rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
-  spec.name        = 'uffizzi-core'
+  spec.name        = 'uffizzi_core'
   spec.version     = UffizziCore::VERSION
   spec.authors     = ['Josh Thurman', 'Grayson Adkins']
   spec.email       = ['info@uffizzi.com']
 
-  spec.summary = 'uffizzi-core'
-  spec.description = 'uffizzi-core'
+  spec.summary = 'uffizzi_core'
+  spec.description = 'uffizzi_core'
   spec.homepage = 'https://uffizzi.com'
   spec.license = 'Apache-2.0'
   spec.required_ruby_version = '>= 2.5.0'
