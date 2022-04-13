@@ -15,7 +15,7 @@ gem 'rack-cors'
 gem 'rails', '~> 6.1.0'
 gem 'sidekiq'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'uffizzi-core', path: './core'
+gem 'uffizzi_core', path: './core'
 
 group :development, :test do
   gem 'awesome_print'
