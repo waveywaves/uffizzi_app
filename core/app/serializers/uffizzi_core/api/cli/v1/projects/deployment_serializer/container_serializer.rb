@@ -19,5 +19,6 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentSerializer::ContainerSerial
              :public,
              :repo_id,
              :continuously_deploy,
-             :receive_incoming_requests
+             :receive_incoming_requests,
+             :healthcheck
 end
