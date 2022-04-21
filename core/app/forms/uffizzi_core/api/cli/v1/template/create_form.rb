@@ -17,6 +17,7 @@ class UffizziCore::Api::Cli::V1::Template::CreateForm < UffizziCore::Template
              :receive_incoming_requests,
              :continuously_deploy,
              :name,
+             :healthcheck,
              { variables: [:name, :value],
                secret_variables: [:name, :value],
                repo_attributes: [
