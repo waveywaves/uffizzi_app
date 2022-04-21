@@ -2,11 +2,12 @@
 
 class UffizziCore::ComposeFile::ServicesOptionsService
   class << self
-    def parse(services, global_configs_data, global_secrets_data, compose_payload)
+    def parse(services:, global_configs_data:, global_secrets_data:, compose_payload:, global_volume_host_data:)
       raise UffizziCore::ComposeFile::ParseError, I18n.t('compose.no_services') if services.nil? || services.keys.empty?
 
       services.keys.map do |service|
-        service_data = prepare_service_data(service, services.fetch(service), global_configs_data, global_secrets_data, compose_payload)
+        service_data = prepare_service_data(service, services.fetch(service), global_configs_data,
+                                            global_secrets_data, compose_payload, global_volume_host_data)
 
         if service_data[:image].blank? && service_data[:build].blank?
           raise UffizziCore::ComposeFile::ParseError, I18n.t('compose.image_build_no_specified', value: service)
@@ -18,7 +19,8 @@ class UffizziCore::ComposeFile::ServicesOptionsService
 
     private
 
-    def prepare_service_data(service_name, service_data, global_configs_data, global_secrets_data, _compose_payload)
+    def prepare_service_data(service_name, service_data, global_configs_data, global_secrets_data,
+                             _compose_payload, global_volume_host_data)
       options_data = {}
       service_data.each_pair do |key, value|
         service_key = key.to_sym
@@ -44,6 +46,8 @@ class UffizziCore::ComposeFile::ServicesOptionsService
                                       UffizziCore::ComposeFile::ServicesOptions::CommandService.parse(value)
                                     when :'x-uffizzi-continuous-preview', :'x-uffizzi-continuous-previews'
                                       UffizziCore::ComposeFile::ContinuousPreviewOptionsService.parse(value)
+                                    when :volumes
+                                      UffizziCore::ComposeFile::ServicesOptions::VolumesService.parse(value, global_volume_host_data)
         end
       end
 

@@ -27,6 +27,10 @@ class UffizziCore::ComposeFile::ConfigOptionService
       compose_data.dig('x-uffizzi', 'ingress').presence || compose_data['x-uffizzi-ingress'].presence
     end
 
+    def volume_host_options(compose_data)
+      compose_data.dig('x-uffizzi', 'volume-host').presence || compose_data['x-uffizzi-volume-host'].presence
+    end
+
     def continuous_preview_option(compose_data)
       compose_data.dig('x-uffizzi', 'continuous_preview').presence ||
         compose_data.dig('x-uffizzi', 'continuous_previews').presence ||

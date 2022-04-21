@@ -1,0 +1,45 @@
+services:
+  web:
+    image: web_service:latest
+    volumes:
+      - /var/web/logs
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./images:/var/nginx/images
+
+  nginx_2:
+    image: nginx:latest
+    volumes:
+      - /app/public:/var/nginx/public
+
+  nginx_3:
+    image: nginx:latest
+    volumes:
+      - ~/assets:/var/nginx/assets
+
+  nginx_4:
+    image: nginx:latest
+    volumes:
+      - source: /app/cache
+        target: /cache
+
+      - source: share_data
+        target: /some_share_data
+
+  nginx_5:
+    image: nginx:latest
+    volumes:
+      - share_data:/var/nginx/images
+
+volumes:
+  share_data:
+
+x-uffizzi-volume-host:
+  service: web
+  root_path: /app
+
+x-uffizzi-ingress:
+  service: nginx
+  port: 80

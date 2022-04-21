@@ -59,6 +59,13 @@ en:
     invalid_healthcheck_command: "Service '%{name}' defines an invalid healthcheck: when 'test' is a list the first item must be either NONE, CMD or CMD-SHELL"
     string_or_array_error: "'%{option}' contains an invalid type, it should be a string, or an array"
     not_implemented: "'%{option}' option is not implemented"
+    volume_path_is_invalid: The path '%{path}' is invalid
+    volume_host_option_is_not_defined: The option '%{option}' for 'x-uffizzi-volume-host' is not defined
+    volume_prop_is_required: The '%{prop_name}' is a required property
+    volume_host_service_not_found: Volume host service not found
+    invalid_volume_host_service: Invalid volume host service '%{value}'
+    volume_host_root_path_not_specified: Volume host root path not specified
+    volume_host_root_path_is_invalid: Volume host root path is invalid
   secrets:
     duplicates_exists: Secret with key %{secrets} already exist.
     invalid_key_length: A secret key must be no longer than 256 characters.

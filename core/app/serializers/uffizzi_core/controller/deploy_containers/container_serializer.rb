@@ -15,7 +15,8 @@ class UffizziCore::Controller::DeployContainers::ContainerSerializer < UffizziCo
              :target_port,
              :public,
              :controller_name,
-             :receive_incoming_requests
+             :receive_incoming_requests,
+             :volumes
 
   has_many :container_config_files
 

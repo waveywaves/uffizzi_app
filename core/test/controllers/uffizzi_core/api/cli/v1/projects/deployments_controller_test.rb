@@ -80,6 +80,7 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     container_attributes = attributes_for(
       :container,
       :with_public_port,
+      :with_volume,
       image: image,
       tag: target_branch,
       receive_incoming_requests: true,
@@ -424,6 +425,7 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     container = create(
       :container,
       :continuously_deploy_enabled,
+      :with_volume,
       deployment: @deployment,
       repo: repo,
       image: webhooks_data[:repository][:repo_name],

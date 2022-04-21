@@ -9,6 +9,7 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
     @repositories = repositories
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def build_attributes(container_data, ingress_data, continuous_preview_global_data, compose_dependencies)
     image_data = container_data[:image] || {}
     build_data = container_data[:build] || {}
@@ -18,6 +19,7 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
     secrets = container_data[:secrets] || []
     container_name = container_data[:container_name]
     continuous_preview_container_data = container_data[:'x-uffizzi-continuous-preview'] || container_data[:'x-uffizzi-continuous-previews']
+    volumes = container_data[:volumes] || []
 
     env_file_dependencies = UffizziCore::ComposeFile::GithubDependenciesService.env_file_dependencies_for_container(compose_dependencies,
                                                                                                                     container_name)
@@ -46,8 +48,10 @@ class UffizziCore::ComposeFile::Builders::ContainerBuilderService
       receive_incoming_requests: is_ingress,
       container_config_files_attributes: config_files(configs_data, configs_dependencies),
       name: container_name,
+      volumes: volumes,
     }
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   private
 

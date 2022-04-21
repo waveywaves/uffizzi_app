@@ -1,0 +1,15 @@
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - /logs_1:/var/web/logs_1
+      - ~/logs_2:/var/web/logs_2
+      - ./logs_3:/var/web/logs_3
+
+x-uffizzi-volume-host:
+  service: nginx
+  root_path: /app
+
+x-uffizzi-ingress:
+  service: nginx
+  port: 80

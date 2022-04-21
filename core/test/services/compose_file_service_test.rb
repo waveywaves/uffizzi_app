@@ -604,4 +604,61 @@ class UffizziCore::ComposeFileServiceTest < ActiveSupport::TestCase
     assert { nginx_repo_attributes[:delete_preview_after] == 12 }
     assert { redis_repo_attributes[:delete_preview_after] == 10 }
   end
+
+  test '#build_template_attributes - check anonymous volumes' do
+    create(:credential, :docker_hub, account: @account)
+    content = file_fixture('files/compose_files/dockerhub_services/volumes_anonymous.yml').read
+    parsed_data = UffizziCore::ComposeFileService.parse(content)
+    attributes = UffizziCore::ComposeFileService.build_template_attributes(parsed_data, 'compose.yml', @account.credentials, @project)
+
+    content_data = YAML.safe_load(content)
+    nginx_container = attributes[:payload][:containers_attributes].detect { |container| container[:image].match(/nginx/) }
+    first_volume = nginx_container[:volumes].first
+
+    assert_equal(2, nginx_container[:volumes].count)
+    assert_equal(UffizziCore::ComposeFile::ServicesOptions::VolumesService::ANONYMOUS_VOLUME_TYPE, first_volume[:type])
+    assert_equal(content_data.dig('services', 'nginx', 'volumes').first, first_volume[:target])
+    assert_nil(first_volume[:source])
+  end
+
+  test '#build_template_attributes - check named volumes' do
+    create(:credential, :docker_hub, account: @account)
+    content = file_fixture('files/compose_files/dockerhub_services/volumes_named.yml').read
+    parsed_data = UffizziCore::ComposeFileService.parse(content)
+    attributes = UffizziCore::ComposeFileService.build_template_attributes(parsed_data, 'compose.yml', @account.credentials, @project)
+
+    content_data = YAML.safe_load(content)
+    nginx_container = attributes[:payload][:containers_attributes].detect { |container| container[:image].match(/nginx/) }
+    first_volume = nginx_container[:volumes].first
+
+    assert(nginx_container[:volumes])
+    assert_equal(UffizziCore::ComposeFile::ServicesOptions::VolumesService::NAMED_VOLUME_TYPE, first_volume[:type])
+    assert_equal(content_data.dig('services', 'nginx', 'volumes').first.split(':').first, first_volume[:source])
+    assert_equal(content_data.dig('services', 'nginx', 'volumes').first.split(':').second, first_volume[:target])
+  end
+
+  test '#build_template_attributes - check host volumes' do
+    create(:credential, :docker_hub, account: @account)
+    content = file_fixture('files/compose_files/dockerhub_services/volumes_host.yml').read
+    parsed_data = UffizziCore::ComposeFileService.parse(content)
+    attributes = UffizziCore::ComposeFileService.build_template_attributes(parsed_data, 'compose.yml', @account.credentials, @project)
+
+    content_data = YAML.safe_load(content)
+    nginx_container = attributes[:payload][:containers_attributes].detect { |container| container[:image].match(/nginx/) }
+    volume_with_absolute_source_path = nginx_container[:volumes].first
+    volume_with_home_source_path = nginx_container[:volumes].second
+    volume_with_relative_source_path = nginx_container[:volumes].third
+
+    assert(nginx_container[:volumes])
+
+    assert_equal(UffizziCore::ComposeFile::ServicesOptions::VolumesService::HOST_VOLUME_TYPE, volume_with_absolute_source_path[:type])
+    assert_equal(content_data.dig('services', 'nginx', 'volumes').first.split(':').first, volume_with_absolute_source_path[:source])
+
+    assert_equal(UffizziCore::ComposeFile::ServicesOptions::VolumesService::HOST_VOLUME_TYPE, volume_with_home_source_path[:type])
+    assert_equal(content_data.dig('services', 'nginx', 'volumes').second.split(':').first, volume_with_home_source_path[:source])
+
+    assert_equal(UffizziCore::ComposeFile::ServicesOptions::VolumesService::HOST_VOLUME_TYPE, volume_with_relative_source_path[:type])
+    assert_equal('/app/logs_3', volume_with_relative_source_path[:source])
+    assert_equal(content_data.dig('x-uffizzi-volume-host', 'service'), volume_with_relative_source_path[:source_container_name])
+  end
 end

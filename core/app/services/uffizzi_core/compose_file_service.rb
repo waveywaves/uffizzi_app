@@ -17,10 +17,18 @@ module UffizziCore::ComposeFileService
     def parse(compose_content, compose_payload = {})
       compose_data = load_compose_data(compose_content)
       check_config_options_format(compose_data)
+
       configs_data = UffizziCore::ComposeFile::ConfigsOptionsService.parse(compose_data['configs'])
       secrets_data = UffizziCore::ComposeFile::SecretsOptionsService.parse(compose_data['secrets'])
-      containers_data = UffizziCore::ComposeFile::ServicesOptionsService.parse(compose_data['services'], configs_data, secrets_data,
-                                                                               compose_payload)
+
+      volume_host_options = UffizziCore::ComposeFile::ConfigOptionService.volume_host_options(compose_data)
+      volume_host_data = UffizziCore::ComposeFile::VolumeHostOptionsService.parse(volume_host_options, compose_data['services'])
+
+      containers_data = UffizziCore::ComposeFile::ServicesOptionsService.parse(services: compose_data['services'],
+                                                                               global_configs_data: configs_data,
+                                                                               global_secrets_data: secrets_data,
+                                                                               compose_payload: compose_payload,
+                                                                               global_volume_host_data: volume_host_data)
 
       continuous_preview_option = UffizziCore::ComposeFile::ConfigOptionService.continuous_preview_option(compose_data)
       continuous_preview_data = UffizziCore::ComposeFile::ContinuousPreviewOptionsService.parse(continuous_preview_option)
