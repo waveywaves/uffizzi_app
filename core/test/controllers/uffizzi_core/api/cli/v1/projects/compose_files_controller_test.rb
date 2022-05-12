@@ -38,7 +38,7 @@ class UffizziCore::Api::Cli::V1::Projects::ComposeFilesControllerTest < ActionCo
     params = { project_slug: @project.slug }
 
     get :show, params: params, format: :json
-    raise
+
     assert_response :success
   end
 
