@@ -65,3 +65,24 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
           repository: uffizzi/app
+  notify_failure:
+    runs-on: ubuntu-latest
+    steps:
+      uses: ravsamhq/notify-slack-action@v1
+      if: always()
+      with: &notification_formatting
+        status: ${{ job.status }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        notification_title: '{workflow} has {status_message}'
+        message_format: '{emoji} *{workflow}* {status_message} in <{repo_url}|{repo}>'
+        footer: 'Linked Repo <{repo_url}|{repo}> | <{workflow_url}|View Workflow>'
+        notify_when: 'failure'
+      env: &notification-environment
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  notify_success:
+    runs-on: ubuntu-latest
+    steps:
+      uses: ravsamhq/notify-slack-action@v1
+      if: ${{ github.ref_name == 'main' }}
+      with: *notification_formatting
+      env: *notification-environment
