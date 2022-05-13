@@ -57,7 +57,6 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     get :show, params: params, format: :json
 
     assert_response :success
-    raise
   end
 
   test '#create - from the existing compose file' do
