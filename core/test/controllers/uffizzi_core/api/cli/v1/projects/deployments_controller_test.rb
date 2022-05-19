@@ -208,7 +208,6 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     end
 
     assert_response :not_found
-    raise
   end
 
   test '#update - update deployment created from main compose file' do
