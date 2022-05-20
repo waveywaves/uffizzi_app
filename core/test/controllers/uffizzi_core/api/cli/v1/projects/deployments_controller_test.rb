@@ -228,6 +228,7 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     differences = {
       -> { UffizziCore::ComposeFile.temporary.count } => 1,
       -> { UffizziCore::Template.with_creation_source(UffizziCore::Template.creation_source.compose_file).count } => 1,
+      -> { @deployment.containers.count } => 1,
     }
 
     assert_difference differences do
@@ -256,6 +257,7 @@ class UffizziCore::Api::Cli::V1::Projects::DeploymentsControllerTest < ActionCon
     differences = {
       -> { UffizziCore::ComposeFile.temporary.count } => 0,
       -> { UffizziCore::Template.with_creation_source(UffizziCore::Template.creation_source.compose_file).count } => 0,
+      -> { @deployment.containers.count } => 1,
     }
 
     assert_difference differences do
