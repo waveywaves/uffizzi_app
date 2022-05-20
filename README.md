@@ -2,7 +2,7 @@
 
 **The primary REST API for creating and managing previews**
 
-While Uffizzi App provides a documented REST API for anyone to use, it's most valuable when used with the open-source [`uffizzi_cli`](https://github.com/UffizziCloud/uffizzi_cli) or [GitHub Action](https://github.com/UffizziCloud/preview-action).
+While Uffizzi App provides a documented REST API for anyone to use, it's most valuable when used with the open-source [`uffizzi_cli`](https://github.com/UffizziCloud/uffizzi_cli) or GitHub Actions [preview](https://github.com/UffizziCloud/preview-action), [update environment](https://github.com/UffizziCloud/update-preview-action), and [delete environment](https://github.com/UffizziCloud/delete-preview-action).
 
 ## Uffizzi Overview
 
@@ -16,7 +16,7 @@ Uffizzi is designed to integrate with any CI/CD system.
 
 See the [Helm chart and installation guide](charts/uffizzi-app/README.md) for installing Uffizzi on your own Kubernetes cluster.
 
-Once Ufizzi is installed, you can use the [Uffizzi CLI](https://github.com/UffizziCloud/uffizzi_cli) to create and manage previews. Additionally, you can continuously deploy previews of your branches using [the GitHub Action](https://github.com/UffizziCloud/preview-action).
+Once Ufizzi is installed, you can use the [Uffizzi CLI](https://github.com/UffizziCloud/uffizzi_cli) to create and manage previews. Additionally, you can continuously deploy previews of your branches using GitHub Actions. See [this example](https://github.com/UffizziCloud/example-voting-app-monorepo/tree/add-update-environment-action/.github/workflows) of how to use GitHub Actions to create, update, and delete previews.
 
 ## Uffizzi Architecture
 <img src="docs/images/uffizzi-architecture.png" description="Uffizzi Architecture" width="320"/>
