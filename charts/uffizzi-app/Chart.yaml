@@ -2,7 +2,7 @@ apiVersion: v2
 name: uffizzi-app
 version: 1.1.2
 kubeVersion: ">= 1.21.0-0" # https://issuetracker.google.com/issues/77503699
-description: "Uffizzi is the Full-stack Previews Engine that makes it easy for your team to preview code changes before merging — whether frontend, backend or microserivce. This is the primary web application that enables a Continuous Previews capability."
+description: "Uffizzi is an open-source engine for creating lightweight, ephemeral test environments for APIs and full-stack applications. Uffizzi enables teams to preview new features before merging."
 type: application
 keywords:
   - devops
@@ -15,6 +15,7 @@ keywords:
   - on-demand
   - ci
   - cd
+  - cp
 home: https://uffizzi.com/
 sources:
   - https://github.com/UffizziCloud/uffizzi_app
