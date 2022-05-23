@@ -60,6 +60,7 @@ en:
     invalid_time_interval: The time interval should be in the following format '{hours}h{minutes}m{seconds}s'. At least one value must be present.
     string_or_array_error: "'%{option}' contains an invalid type, it should be a string, or an array"
     not_implemented: "'%{option}' option is not implemented"
+    infinite_recursion: "Found infinite recursion for key '%{key}'"
   secrets:
     duplicates_exists: Secret with key %{secrets} already exist.
     invalid_key_length: A secret key must be no longer than 256 characters.
